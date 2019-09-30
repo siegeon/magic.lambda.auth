@@ -8,9 +8,10 @@
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.auth</PackageProjectUrl>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\projects\personal\magic.lambda.auth\magic.lambda.auth\magic.lambda.auth.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin/Release/netstandard2.0/magic.lambda.auth.xml</DocumentationFile>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="magic.node" Version="1.0.0" />
     <PackageReference Include="magic.node.extensions" Version="1.0.0" />
