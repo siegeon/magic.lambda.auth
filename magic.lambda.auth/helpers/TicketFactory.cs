@@ -31,7 +31,7 @@ namespace magic.lambda.auth.helpers
             // Getting data to put into token.
             var secret = configuration["auth:secret"] ?? "THIS_IS_NOT_A_GOOD_SECRET";
             var validMinutes = int.Parse(configuration["auth:valid-minutes"] ?? "20");
-            var key = Encoding.ASCII.GetBytes(secret);
+            var key = Encoding.UTF8.GetBytes(secret);
 
             // Creating our token descriptor.
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -42,9 +42,7 @@ namespace magic.lambda.auth.helpers
                     new Claim(ClaimTypes.Name, ticket.Username),
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(validMinutes),
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };
 
             // Adding all roles.

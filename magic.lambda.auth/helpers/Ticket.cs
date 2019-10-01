@@ -21,7 +21,7 @@ namespace magic.lambda.auth.helpers
         public Ticket(string username, IEnumerable<string> roles)
         {
             Username = username ?? throw new ArgumentNullException(nameof(username));
-            Roles = new List<string>(roles ?? throw new ArgumentException(nameof(roles)));
+            Roles = new List<string>(roles ?? new string[] { });
         }
 
         /// <summary>

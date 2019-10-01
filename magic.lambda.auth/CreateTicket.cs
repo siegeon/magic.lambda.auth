@@ -50,7 +50,7 @@ namespace magic.lambda.auth
                 throw new ApplicationException("[auth.create-ticket] must be given a [username] argument at the minimum");
 
             var username = usernameNode.First().GetEx<string>();
-            var roles = rolesNode.First().Children.Select(x => x.GetEx<string>());
+            var roles = rolesNode.FirstOrDefault()?.Children.Select(x => x.GetEx<string>());
 
             input.Clear();
             input.Value = TicketFactory.CreateTicket(_configuration, new Ticket(username, roles));
