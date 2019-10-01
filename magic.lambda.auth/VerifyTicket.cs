@@ -6,28 +6,37 @@
 using System;
 using magic.node;
 using magic.node.extensions;
-using magic.lambda.auth.init;
 using magic.signals.contracts;
+using magic.lambda.auth.helpers;
 
 namespace magic.lambda.auth
 {
+    /// <summary>
+    /// [auth.verify-ticket] slot, for verifying that a user is authenticated, and optionally belongs to
+    /// one of the roles supplied as a comma separated list of values.
+    /// </summary>
 	[Slot(Name = "auth.verify-ticket")]
 	public class VerifyTicket : ISlot
 	{
         readonly IServiceProvider _services;
-        readonly HttpService _httpService;
 
-        public VerifyTicket(
-            IServiceProvider services,
-            HttpService httpService)
+        /// <summary>
+        /// Creates a new instance of class.
+        /// </summary>
+        /// <param name="services">Service provider, necessary to retrieve the IHttpConextAccessor.</param>
+        public VerifyTicket(IServiceProvider services)
 		{
             _services = services ?? throw new ArgumentNullException(nameof(services));
-            _httpService = httpService ?? throw new ArgumentNullException(nameof(httpService));
         }
 
+        /// <summary>
+        /// Implementation of slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise the signal.</param>
+        /// <param name="input">Arguments to signal.</param>
         public void Signal(ISignaler signaler, Node input)
 		{
-            _httpService.VerifyTicket(_services, input.GetEx<string>());
+            TicketFactory.VerifyTicket(_services, input.GetEx<string>());
             input.Value = true;
 		}
     }

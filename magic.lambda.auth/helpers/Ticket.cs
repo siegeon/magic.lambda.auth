@@ -4,24 +4,34 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace magic.lambda.auth.helpers
 {
+    /// <summary>
+    /// Authorization ticket wrapper class, for encapsulating a user and its roles.
+    /// </summary>
 	public class Ticket
 	{
+        /// <summary>
+        /// Creates a new ticket instance.
+        /// </summary>
+        /// <param name="username">Username for your ticket.</param>
+        /// <param name="roles">roles the user belongs to.</param>
         public Ticket(string username, IEnumerable<string> roles)
         {
             Username = username ?? throw new ArgumentNullException(nameof(username));
-
-            if (roles == null || roles.Count() == 0)
-                throw new ArgumentException(nameof(roles));
-            Roles = new List<string>(roles);
+            Roles = new List<string>(roles ?? throw new ArgumentException(nameof(roles)));
         }
 
+        /// <summary>
+        /// Username of the user.
+        /// </summary>
         public string Username { get; private set; }
 
-        public List<string> Roles { get; private set; }
+        /// <summary>
+        /// Roles the user belongs to.
+        /// </summary>
+        public IEnumerable<string> Roles { get; private set; }
     }
 }
