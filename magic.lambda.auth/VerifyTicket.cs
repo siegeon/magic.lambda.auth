@@ -8,6 +8,7 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 using magic.lambda.auth.helpers;
+using magic.lambda.auth.contracts;
 
 namespace magic.lambda.auth
 {
@@ -18,15 +19,15 @@ namespace magic.lambda.auth
 	[Slot(Name = "auth.verify-ticket")]
 	public class VerifyTicket : ISlot
 	{
-        readonly IServiceProvider _services;
+        readonly ITicketProvider _ticketProvider;
 
         /// <summary>
         /// Creates a new instance of class.
         /// </summary>
-        /// <param name="services">Service provider, necessary to retrieve the IHttpConextAccessor.</param>
-        public VerifyTicket(IServiceProvider services)
+        /// <param name="ticketProvider">Ticket provider, necessary to retrieve the authenticated user.</param>
+        public VerifyTicket(ITicketProvider ticketProvider)
 		{
-            _services = services ?? throw new ArgumentNullException(nameof(services));
+            _ticketProvider = ticketProvider ?? throw new ArgumentNullException(nameof(ticketProvider));
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace magic.lambda.auth
         /// <param name="input">Arguments to signal.</param>
         public void Signal(ISignaler signaler, Node input)
 		{
-            TicketFactory.VerifyTicket(_services, input.GetEx<string>());
+            TicketFactory.VerifyTicket(_ticketProvider, input.GetEx<string>());
             input.Value = true;
 		}
     }

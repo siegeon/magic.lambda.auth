@@ -7,13 +7,12 @@ using System;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using magic.node;
-using magic.lambda.auth.helpers;
 using magic.node.extensions;
 using magic.signals.contracts;
+using magic.lambda.auth.helpers;
 
 namespace magic.lambda.auth
 {
-    // TODO: Consider using YALOA to support the removal of the dependency upon IHttpContextAccessor and HttpContext.
     /// <summary>
     /// [auth.create-ticket] slot for creating a new JWT token.
     /// </summary>

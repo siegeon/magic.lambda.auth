@@ -6,9 +6,10 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Security;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Http;
+using magic.lambda.auth.contracts;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 
@@ -58,37 +59,20 @@ namespace magic.lambda.auth.helpers
         /// Verifies that the current user belongs to the specified role.
         /// </summary>
         /// <param name="services">Service provider, needed to retrieve the IHttpContextAccessor</param>
-        /// <param name="role"></param>
-        public static void VerifyTicket(IServiceProvider services, string role)
+        /// <param name="roles"></param>
+        public static void VerifyTicket(ITicketProvider ticketProvider, string roles)
         {
-            // Retrieving the HttpContext object.
-            var contextAccessor = services.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor;
-            var context = contextAccessor.HttpContext;
-            if (context == null)
-                throw new ApplicationException("No HTTP context exists");
+            if (!ticketProvider.IsAuthenticated())
+                throw new SecurityException("Access denied");
 
-            // Verifying we're dealing with an authenticated user.
-            var user = context.User;
-            if (user == null || !user.Identity.IsAuthenticated)
-                throw new ApplicationException("Access denied");
-
-            // Checking if caller is also trying to check if user belongs to some role(s).
-            if (!string.IsNullOrEmpty(role))
+            if (!string.IsNullOrEmpty(roles))
             {
-                // Verifying the users belongs to (at least) one of the comma separated roles supplied.
-                var inRole = false;
-                foreach (var idxRole in role.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var idxRole in roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    if (user.IsInRole(idxRole.Trim()))
-                    {
-                        inRole = true;
-                        break;
-                    }
+                    if (ticketProvider.InRole(idxRole))
+                        return;
                 }
-
-                // Throwing an exception unless the user belongs to the specified role.
-                if (!inRole)
-                    throw new ApplicationException("Access denied");
+                throw new SecurityException("Access denied");
             }
         }
 
@@ -97,29 +81,9 @@ namespace magic.lambda.auth.helpers
         /// </summary>
         /// <param name="services">Service provider, necessary to retrieve the IHttpContextAccessor</param>
         /// <returns></returns>
-        public static Ticket GetTicket(IServiceProvider services)
+        public static Ticket GetTicket(ITicketProvider ticketProvider)
         {
-            // Retrieving the HttpContext object.
-            var contextAccessor = services.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor;
-            var context = contextAccessor.HttpContext;
-            if (context == null)
-                throw new ApplicationException("No HTTP context exists");
-
-            // Verifying we're dealing with an authenticated user.
-            var user = context.User;
-            if (user == null || !user.Identity.IsAuthenticated)
-                throw new ApplicationException("Access denied");
-
-            // Finding roles for user.
-            var identity = user.Identity as ClaimsIdentity;
-            var username = identity.Claims
-                .Where(c => c.Type == ClaimTypes.Name)
-                .Select(c => c.Value).First();
-            var roles = identity.Claims
-                .Where(c => c.Type == ClaimTypes.Role)
-                .Select(c => c.Value);
-            return new Ticket(username, roles);
+            return new Ticket(ticketProvider.Username, ticketProvider.Roles);
         }
-
     }
 }
