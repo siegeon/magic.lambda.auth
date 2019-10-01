@@ -14,9 +14,9 @@ using magic.lambda.auth.helpers;
 namespace magic.lambda.auth
 {
     /// <summary>
-    /// [auth.create-ticket] slot for creating a new JWT token.
+    /// [auth.ticket.create] slot for creating a new JWT token.
     /// </summary>
-	[Slot(Name = "auth.create-ticket")]
+	[Slot(Name = "auth.ticket.create")]
 	public class CreateTicket : ISlot
 	{
 		readonly IConfiguration _configuration;
@@ -38,16 +38,16 @@ namespace magic.lambda.auth
 		public void Signal(ISignaler signaler, Node input)
 		{
             if (input.Value != null)
-                throw new ArgumentException($"[auth.create-ticket] don't know how to handle parameters in its value.");
+                throw new ArgumentException($"[auth.ticket.create] don't know how to handle parameters in its value.");
 
             if (input.Children.Any(x => x.Name != "username" && x.Name != "roles"))
-                throw new ApplicationException("[auth.create-ticket] can only handle [username] and [roles] children nodes");
+                throw new ApplicationException("[auth.ticket.create] can only handle [username] and [roles] children nodes");
 
             var usernameNode = input.Children.Where(x => x.Name == "username");
             var rolesNode = input.Children.Where(x => x.Name == "roles");
 
             if (usernameNode.Count() != 1)
-                throw new ApplicationException("[auth.create-ticket] must be given a [username] argument at the minimum");
+                throw new ApplicationException("[auth.ticket.create] must be given a [username] argument at the minimum");
 
             var username = usernameNode.First().GetEx<string>();
             var roles = rolesNode.FirstOrDefault()?.Children.Select(x => x.GetEx<string>());

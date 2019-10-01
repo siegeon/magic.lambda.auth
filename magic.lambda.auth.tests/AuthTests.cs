@@ -21,7 +21,7 @@ namespace magic.lambda.auth.tests
             var signaler = Common.Initialize();
             var args = new Node();
             args.Add(new Node("username", "foo"));
-            signaler.Signal("auth.create-ticket", args);
+            signaler.Signal("auth.ticket.create", args);
             Assert.NotNull(args.Value);
             Assert.True(args.Get<string>().Length > 20);
         }
@@ -32,9 +32,9 @@ namespace magic.lambda.auth.tests
             var signaler = Common.Initialize();
             var args = new Node();
             args.Add(new Node("username", "foo"));
-            signaler.Signal("auth.create-ticket", args);
+            signaler.Signal("auth.ticket.create", args);
             var nArgs = new Node();
-            signaler.Signal("auth.refresh-ticket", nArgs);
+            signaler.Signal("auth.ticket.refresh", nArgs);
             Assert.NotEqual(args.Value, nArgs.Value);
         }
 
@@ -45,7 +45,7 @@ namespace magic.lambda.auth.tests
             var args = new Node();
             args.Add(new Node("username", "foo"));
             args.Add(new Node("roles", null, new Node[] { new Node("", "howdy1") }));
-            signaler.Signal("auth.create-ticket", args);
+            signaler.Signal("auth.ticket.create", args);
             var token = new JwtSecurityToken(jwtEncodedString: args.Get<string>());
             Assert.Equal("foo", token.Payload["unique_name"]);
             Assert.Equal("howdy1", token.Payload["role"]);
@@ -55,28 +55,28 @@ namespace magic.lambda.auth.tests
         public void VerifyTicket()
         {
             var signaler = Common.Initialize();
-            signaler.Signal("auth.verify-ticket", new Node()); // Notice, our TicketProvder in Common.cs will sort this out for us.
+            signaler.Signal("auth.ticket.verify", new Node()); // Notice, our TicketProvder in Common.cs will sort this out for us.
         }
 
         [Fact]
         public void VerifyRole_01()
         {
             var signaler = Common.Initialize();
-            signaler.Signal("auth.verify-ticket", new Node("", "bar1")); // Notice, our TicketProvder in Common.cs will sort this out for us.
+            signaler.Signal("auth.ticket.verify", new Node("", "bar1")); // Notice, our TicketProvder in Common.cs will sort this out for us.
         }
 
         [Fact]
         public void VerifyRole_02()
         {
             var signaler = Common.Initialize();
-            signaler.Signal("auth.verify-ticket", new Node("", "bar2")); // Notice, our TicketProvder in Common.cs will sort this out for us.
+            signaler.Signal("auth.ticket.verify", new Node("", "bar2")); // Notice, our TicketProvder in Common.cs will sort this out for us.
         }
 
         [Fact]
         public void VerifyRole_Throws()
         {
             var signaler = Common.Initialize();
-            Assert.Throws<SecurityException>(() => signaler.Signal("auth.verify-ticket", new Node("", "bar2-XXX")));
+            Assert.Throws<SecurityException>(() => signaler.Signal("auth.ticket.verify", new Node("", "bar2-XXX")));
         }
     }
 }

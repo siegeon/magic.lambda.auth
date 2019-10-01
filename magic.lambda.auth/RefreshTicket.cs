@@ -13,11 +13,11 @@ using magic.lambda.auth.contracts;
 namespace magic.lambda.auth
 {
     /// <summary>
-    /// [auth.refresh-ticket] slot refreshing an existing ticket, resulting in a new ticket,
+    /// [auth.ticket.refresh] slot refreshing an existing ticket, resulting in a new ticket,
     /// with a postponed expiration time, to avoid having users having to login every time their
     /// token expires.
     /// </summary>
-	[Slot(Name = "auth.refresh-ticket")]
+	[Slot(Name = "auth.ticket.refresh")]
 	public class RefreshTicket : ISlot
 	{
         readonly ITicketProvider _ticketProvider;

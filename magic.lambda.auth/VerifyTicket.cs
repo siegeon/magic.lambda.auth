@@ -13,10 +13,10 @@ using magic.lambda.auth.contracts;
 namespace magic.lambda.auth
 {
     /// <summary>
-    /// [auth.verify-ticket] slot, for verifying that a user is authenticated, and optionally belongs to
+    /// [auth.ticket.verify] slot, for verifying that a user is authenticated, and optionally belongs to
     /// one of the roles supplied as a comma separated list of values.
     /// </summary>
-	[Slot(Name = "auth.verify-ticket")]
+	[Slot(Name = "auth.ticket.verify")]
 	public class VerifyTicket : ISlot
 	{
         readonly ITicketProvider _ticketProvider;
