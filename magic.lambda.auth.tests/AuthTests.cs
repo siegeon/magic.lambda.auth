@@ -3,12 +3,10 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
-using System;
 using System.Security;
 using Xunit;
 using magic.node;
 using magic.node.extensions;
-using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace magic.lambda.auth.tests

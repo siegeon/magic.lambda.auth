@@ -7,12 +7,12 @@
     <Authors>Thomas Hansen</Authors>
     <Company>Thomas Hansen</Company>
     <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
-    <Description>Authentication and authorization helpers for Magic.</Description>
+    <Description>Authentication and authorization slots for Magic.</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.auth</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.auth/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.1.2</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.auth.git</RepositoryUrl>
@@ -24,12 +24,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="magic.node" Version="1.0.0" />
-    <PackageReference Include="magic.node.extensions" Version="1.0.0" />
-    <PackageReference Include="magic.signals.contracts" Version="1.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.5.0" />
+    <PackageReference Include="magic.lambda" Version="1.1.0" />
   </ItemGroup>
 </Project>

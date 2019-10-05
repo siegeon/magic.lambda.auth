@@ -29,7 +29,8 @@ namespace magic.lambda.auth.helpers
         public static string CreateTicket(IConfiguration configuration, Ticket ticket)
         {
             // Getting data to put into token.
-            var secret = configuration["auth:secret"] ?? "THIS_IS_NOT_A_GOOD_SECRET";
+            var secret = configuration["auth:secret"] ??
+                throw new SecurityException("We couldn't find any 'auth:secret' setting in your applications configuration");
             var validMinutes = int.Parse(configuration["auth:valid-minutes"] ?? "20");
             var key = Encoding.UTF8.GetBytes(secret);
 

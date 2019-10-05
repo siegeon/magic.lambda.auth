@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using magic.signals.services;
 using magic.signals.contracts;
 using magic.lambda.auth.contracts;
@@ -35,13 +36,15 @@ namespace magic.lambda.auth.tests
 
         public static ISignaler Initialize()
         {
-            var configuration = new ConfigurationBuilder().Build();
             var services = new ServiceCollection();
-            services.AddTransient<IConfiguration>((svc) => configuration);
             services.AddTransient<ISignaler, Signaler>();
             var types = new SignalsProvider(InstantiateAllTypes<ISlot>(services));
             services.AddTransient<ISignalsProvider>((svc) => types);
             services.AddTransient<ITicketProvider, TicketProvider>();
+            var mockConfiguration = new Mock<IConfiguration>();
+            mockConfiguration.SetupGet(x => x[It.Is<string>(x2 => x2 == "auth:secret")]).Returns("some-secret-goes-here");
+            mockConfiguration.SetupGet(x => x[It.Is<string>(x2 => x2 == "auth:valid-minutes")]).Returns("20");
+            services.AddTransient((svc) => mockConfiguration.Object);
             var provider = services.BuildServiceProvider();
             return provider.GetService<ISignaler>();
         }
