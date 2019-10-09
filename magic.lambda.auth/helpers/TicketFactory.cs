@@ -29,9 +29,9 @@ namespace magic.lambda.auth.helpers
         public static string CreateTicket(IConfiguration configuration, Ticket ticket)
         {
             // Getting data to put into token.
-            var secret = configuration["auth:secret"] ??
-                throw new SecurityException("We couldn't find any 'auth:secret' setting in your applications configuration");
-            var validMinutes = int.Parse(configuration["auth:valid-minutes"] ?? "20");
+            var secret = configuration["magic:auth:secret"] ??
+                throw new SecurityException("We couldn't find any 'magic:auth:secret' setting in your applications configuration");
+            var validMinutes = int.Parse(configuration["magic:auth:valid-minutes"] ?? "20");
             var key = Encoding.UTF8.GetBytes(secret);
 
             // Creating our token descriptor.
@@ -57,7 +57,7 @@ namespace magic.lambda.auth.helpers
         /// <summary>
         /// Verifies that the current user belongs to the specified role.
         /// </summary>
-        /// <param name="services">Service provider, needed to retrieve the IHttpContextAccessor</param>
+        /// <param name="ticketProvider">Service provider, needed to retrieve the IHttpContextAccessor</param>
         /// <param name="roles"></param>
         public static void VerifyTicket(ITicketProvider ticketProvider, string roles)
         {
@@ -78,7 +78,7 @@ namespace magic.lambda.auth.helpers
         /// <summary>
         /// Returns the ticket belonging to the specified user.
         /// </summary>
-        /// <param name="services">Service provider, necessary to retrieve the IHttpContextAccessor</param>
+        /// <param name="ticketProvider">Service provider, necessary to retrieve the IHttpContextAccessor</param>
         /// <returns></returns>
         public static Ticket GetTicket(ITicketProvider ticketProvider)
         {
