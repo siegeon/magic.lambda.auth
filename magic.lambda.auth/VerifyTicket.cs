@@ -16,9 +16,9 @@ namespace magic.lambda.auth
     /// [auth.ticket.verify] slot, for verifying that a user is authenticated, and optionally belongs to
     /// one of the roles supplied as a comma separated list of values.
     /// </summary>
-	[Slot(Name = "auth.ticket.verify")]
-	public class VerifyTicket : ISlot
-	{
+    [Slot(Name = "auth.ticket.verify")]
+    public class VerifyTicket : ISlot
+    {
         readonly ITicketProvider _ticketProvider;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace magic.lambda.auth
         /// </summary>
         /// <param name="ticketProvider">Ticket provider, necessary to retrieve the authenticated user.</param>
         public VerifyTicket(ITicketProvider ticketProvider)
-		{
+        {
             _ticketProvider = ticketProvider ?? throw new ArgumentNullException(nameof(ticketProvider));
         }
 
@@ -36,9 +36,9 @@ namespace magic.lambda.auth
         /// <param name="signaler">Signaler used to raise the signal.</param>
         /// <param name="input">Arguments to signal.</param>
         public void Signal(ISignaler signaler, Node input)
-		{
+        {
             TicketFactory.VerifyTicket(_ticketProvider, input.GetEx<string>());
             input.Value = true;
-		}
+        }
     }
 }

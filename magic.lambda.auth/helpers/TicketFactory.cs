@@ -18,8 +18,8 @@ namespace magic.lambda.auth.helpers
     /// <summary>
     /// Helper class for creating, retrieving and verifying a JWT token from a ticket.
     /// </summary>
-	public static class TicketFactory
-	{
+    public static class TicketFactory
+    {
         /// <summary>
         /// Creates a JWT token from the specified ticket.
         /// </summary>

@@ -11,8 +11,8 @@ namespace magic.lambda.auth.helpers
     /// <summary>
     /// Authorization ticket wrapper class, for encapsulating a user and its roles.
     /// </summary>
-	public class Ticket
-	{
+    public class Ticket
+    {
         /// <summary>
         /// Creates a new ticket instance.
         /// </summary>

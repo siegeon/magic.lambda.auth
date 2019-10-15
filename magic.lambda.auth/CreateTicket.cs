@@ -16,27 +16,27 @@ namespace magic.lambda.auth
     /// <summary>
     /// [auth.ticket.create] slot for creating a new JWT token.
     /// </summary>
-	[Slot(Name = "auth.ticket.create")]
-	public class CreateTicket : ISlot
-	{
-		readonly IConfiguration _configuration;
+    [Slot(Name = "auth.ticket.create")]
+    public class CreateTicket : ISlot
+    {
+        readonly IConfiguration _configuration;
 
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
         /// <param name="configuration">Configuration for application.</param>
-		public CreateTicket(IConfiguration configuration)
-		{
-			_configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-		}
+        public CreateTicket(IConfiguration configuration)
+        {
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        }
 
         /// <summary>
         /// Implementation for the slots.
         /// </summary>
         /// <param name="signaler">Signaler used to raise the signal.</param>
         /// <param name="input">Arguments to your signal.</param>
-		public void Signal(ISignaler signaler, Node input)
-		{
+        public void Signal(ISignaler signaler, Node input)
+        {
             if (input.Value != null)
                 throw new ArgumentException($"[auth.ticket.create] don't know how to handle parameters in its value.");
 
@@ -54,6 +54,6 @@ namespace magic.lambda.auth
 
             input.Clear();
             input.Value = TicketFactory.CreateTicket(_configuration, new Ticket(username, roles));
-		}
+        }
     }
 }
