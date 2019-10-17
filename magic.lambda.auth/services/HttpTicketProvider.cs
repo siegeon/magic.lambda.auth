@@ -14,7 +14,8 @@ namespace magic.lambda.auth.services
 {
     /// <summary>
     /// HTTP ticket provider service implementation.
-    /// Provides a thin layer of abstraction between retrieving authenticated user, and the HttpContext.
+    /// Provides a thin layer of abstraction between retrieving authenticated user, 
+    /// and the HttpContext to disassociate the HttpContext form the ticket declaring currently logged in user.
     /// </summary>
     public class HttpTicketProvider : ITicketProvider
     {

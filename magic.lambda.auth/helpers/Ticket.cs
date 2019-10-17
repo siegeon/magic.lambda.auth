@@ -20,7 +20,7 @@ namespace magic.lambda.auth.helpers
         /// <param name="roles">roles the user belongs to.</param>
         public Ticket(string username, IEnumerable<string> roles)
         {
-            Username = username ?? throw new ArgumentNullException(nameof(username));
+            Username = username;
             Roles = new List<string>(roles ?? new string[] { });
         }
 

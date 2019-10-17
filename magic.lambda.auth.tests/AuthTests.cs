@@ -3,11 +3,12 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System.Linq;
 using System.Security;
+using System.IdentityModel.Tokens.Jwt;
 using Xunit;
 using magic.node;
 using magic.node.extensions;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace magic.lambda.auth.tests
 {
@@ -54,6 +55,18 @@ namespace magic.lambda.auth.tests
         {
             var signaler = Common.Initialize();
             signaler.Signal("auth.ticket.verify", new Node()); // Notice, our TicketProvder in Common.cs will sort this out for us.
+        }
+
+        [Fact]
+        public void GetTicket()
+        {
+            var signaler = Common.Initialize();
+            var node = new Node();
+            signaler.Signal("auth.ticket.get", node); // Notice, our TicketProvder in Common.cs will sort this out for us.
+            Assert.Equal("foo", node.Value);
+            Assert.Equal(2, node.Children.Count());
+            Assert.Equal("bar1", node.Children.First().Value);
+            Assert.Equal("bar2", node.Children.Skip(1).First().Value);
         }
 
         [Fact]
