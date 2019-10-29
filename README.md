@@ -16,9 +16,9 @@ apply (don't use the exact same salt, the idea is to provide a _random_ salt, un
 
 ```json
 {
-	"auth": {
-		"secret":"some-rubbish-random23545456-characters-goes-here!!!!!"
-	}
+  "auth": {
+    "secret":"some-rubbish-random23545456-characters-goes-here!!!!!"
+  }
 }
 ```
 
