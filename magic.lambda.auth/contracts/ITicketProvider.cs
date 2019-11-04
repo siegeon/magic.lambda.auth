@@ -10,7 +10,7 @@ namespace magic.lambda.auth.contracts
     /// <summary>
     /// Interface for retrieving authenticated user.
     /// </summary>
-	public interface ITicketProvider
+    public interface ITicketProvider
     {
         /// <summary>
         /// Returns the currently authenticated user's username.
