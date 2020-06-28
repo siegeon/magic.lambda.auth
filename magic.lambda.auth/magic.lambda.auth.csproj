@@ -12,7 +12,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.auth/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>7.0.0</PackageVersion>
+    <PackageVersion>7.0.1</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.auth.git</RepositoryUrl>
@@ -35,7 +35,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
-    <PackageReference Include="magic.node.extensions" Version="7.0.0" />
+    <PackageReference Include="magic.node.extensions" Version="7.0.1" />
     <PackageReference Include="magic.signals.contracts" Version="7.0.0" />
   </ItemGroup>
 </Project>
