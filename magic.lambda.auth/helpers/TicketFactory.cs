@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using magic.lambda.exceptions;
 using magic.lambda.auth.contracts;
 
 namespace magic.lambda.auth.helpers
@@ -62,7 +63,7 @@ namespace magic.lambda.auth.helpers
         public static void VerifyTicket(ITicketProvider ticketProvider, string roles)
         {
             if (!ticketProvider.IsAuthenticated())
-                throw new SecurityException("Access denied");
+                throw new HyperlambdaException("Access denied", true, 401);
 
             if (!string.IsNullOrEmpty(roles))
             {
@@ -71,7 +72,7 @@ namespace magic.lambda.auth.helpers
                     if (ticketProvider.InRole(idxRole))
                         return;
                 }
-                throw new SecurityException("Access denied");
+                throw new HyperlambdaException("Access denied", true, 401);
             }
         }
 
