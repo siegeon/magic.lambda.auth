@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Xunit;
 using magic.node;
 using magic.node.extensions;
+using magic.lambda.exceptions;
 
 namespace magic.lambda.auth.tests
 {
@@ -87,7 +88,7 @@ namespace magic.lambda.auth.tests
         public void VerifyRole_Throws()
         {
             var signaler = Common.Initialize();
-            Assert.Throws<SecurityException>(() => signaler.Signal("auth.ticket.verify", new Node("", "bar2-XXX")));
+            Assert.Throws<HyperlambdaException>(() => signaler.Signal("auth.ticket.verify", new Node("", "bar2-XXX")));
         }
     }
 }
