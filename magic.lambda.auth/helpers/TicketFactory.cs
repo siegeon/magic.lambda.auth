@@ -9,9 +9,9 @@ using System.Text;
 using System.Security;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using magic.lambda.auth.contracts;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using magic.lambda.auth.contracts;
 
 namespace magic.lambda.auth.helpers
 {
