@@ -41,13 +41,13 @@ namespace magic.lambda.auth
                 throw new ArgumentException($"[auth.ticket.create] don't know how to handle parameters in its value.");
 
             if (input.Children.Any(x => x.Name != "username" && x.Name != "roles"))
-                throw new ApplicationException("[auth.ticket.create] can only handle [username] and [roles] children nodes");
+                throw new ArgumentException("[auth.ticket.create] can only handle [username] and [roles] children nodes");
 
             var usernameNode = input.Children.Where(x => x.Name == "username");
             var rolesNode = input.Children.Where(x => x.Name == "roles");
 
             if (usernameNode.Count() != 1)
-                throw new ApplicationException("[auth.ticket.create] must be given a [username] argument at the minimum");
+                throw new ArgumentException("[auth.ticket.create] must be given a [username] argument at the minimum");
 
             var username = usernameNode.First().GetEx<string>();
             var roles = rolesNode.FirstOrDefault()?.Children.Select(x => x.GetEx<string>());
