@@ -27,7 +27,7 @@ namespace magic.lambda.auth
         /// <param name="ticketProvider">Ticket provider, necessary to retrieve the authenticated user.</param>
         public VerifyTicket(ITicketProvider ticketProvider)
         {
-            _ticketProvider = ticketProvider ?? throw new ArgumentNullException(nameof(ticketProvider));
+            _ticketProvider = ticketProvider;
         }
 
         /// <summary>
