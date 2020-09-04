@@ -4,7 +4,6 @@
  */
 
 using System.Linq;
-using System.Security;
 using System.IdentityModel.Tokens.Jwt;
 using Xunit;
 using magic.node;
@@ -16,7 +15,7 @@ namespace magic.lambda.auth.tests
     public class AuthTests
     {
         [Fact]
-        public void Authenticate()
+        public void AuthenticateNoRoles()
         {
             var signaler = Common.Initialize();
             var args = new Node();
@@ -36,6 +35,7 @@ namespace magic.lambda.auth.tests
             var nArgs = new Node();
             signaler.Signal("auth.ticket.refresh", nArgs);
             Assert.NotEqual(args.Value, nArgs.Value);
+            Assert.True(nArgs.Get<string>().Length > 20);
         }
 
         [Fact]

@@ -27,7 +27,7 @@ namespace magic.lambda.auth
         /// <param name="configuration">Configuration for application.</param>
         public CreateTicket(IConfiguration configuration)
         {
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -37,20 +37,13 @@ namespace magic.lambda.auth
         /// <param name="input">Arguments to your signal.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            if (input.Value != null)
-                throw new ArgumentException($"[auth.ticket.create] don't know how to handle parameters in its value.");
-
-            if (input.Children.Any(x => x.Name != "username" && x.Name != "roles"))
-                throw new ArgumentException("[auth.ticket.create] can only handle [username] and [roles] children nodes");
-
-            var usernameNode = input.Children.Where(x => x.Name == "username");
-            var rolesNode = input.Children.Where(x => x.Name == "roles");
-
-            if (usernameNode.Count() != 1)
-                throw new ArgumentException("[auth.ticket.create] must be given a [username] argument at the minimum");
-
-            var username = usernameNode.First().GetEx<string>();
-            var roles = rolesNode.FirstOrDefault()?.Children.Select(x => x.GetEx<string>());
+            var username = input.Children.FirstOrDefault(x => x.Name == "username")?.GetEx<string>()
+                ?? throw new ArgumentException("No [username] supplied to [auth.ticket.create]");
+            var roles = input.Children
+                .FirstOrDefault(x => x.Name == "roles")?
+                .Children
+                .Select(x => x.GetEx<string>())
+                .ToArray();
 
             input.Clear();
             input.Value = TicketFactory.CreateTicket(_configuration, new Ticket(username, roles));

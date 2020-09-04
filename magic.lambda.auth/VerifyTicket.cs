@@ -38,7 +38,6 @@ namespace magic.lambda.auth
         public void Signal(ISignaler signaler, Node input)
         {
             TicketFactory.VerifyTicket(_ticketProvider, input.GetEx<string>());
-            input.Value = true;
         }
     }
 }
