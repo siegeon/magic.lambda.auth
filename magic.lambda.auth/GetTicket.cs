@@ -26,7 +26,7 @@ namespace magic.lambda.auth
         /// <param name="ticketProvider">Your ticket provider.</param>
         public GetTicket(ITicketProvider ticketProvider)
         {
-            _ticketProvider = ticketProvider ?? throw new ArgumentNullException(nameof(ticketProvider));
+            _ticketProvider = ticketProvider;
         }
 
         /// <summary>
