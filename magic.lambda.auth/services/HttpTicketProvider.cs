@@ -28,7 +28,7 @@ namespace magic.lambda.auth.services
         /// authenticated user from the HttpContext.</param>
         public HttpTicketProvider(IHttpContextAccessor contextAccessor)
         {
-            _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
+            _contextAccessor = contextAccessor;
         }
 
         /// <summary>
