@@ -3,6 +3,7 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System;
 using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using Xunit;
@@ -23,6 +24,14 @@ namespace magic.lambda.auth.tests
             signaler.Signal("auth.ticket.create", args);
             Assert.NotNull(args.Value);
             Assert.True(args.Get<string>().Length > 20);
+        }
+
+        [Fact]
+        public void AuthenticateNoRoles_Throws()
+        {
+            var signaler = Common.Initialize();
+            var args = new Node();
+            Assert.Throws<ArgumentException>(() => signaler.Signal("auth.ticket.create", args));
         }
 
         [Fact]
@@ -56,6 +65,20 @@ namespace magic.lambda.auth.tests
         {
             var signaler = Common.Initialize();
             signaler.Signal("auth.ticket.verify", new Node()); // Notice, our TicketProvder in Common.cs will sort this out for us.
+        }
+
+        [Fact]
+        public void VerifyTicketNoConfig()
+        {
+            var signaler = Common.Initialize(true, false);
+            signaler.Signal("auth.ticket.verify", new Node()); // Notice, our TicketProvder in Common.cs will sort this out for us.
+        }
+
+        [Fact]
+        public void VerifyTicket_Throws()
+        {
+            var signaler = Common.Initialize(false);
+            Assert.Throws<HyperlambdaException>(() => signaler.Signal("auth.ticket.verify", new Node()));
         }
 
         [Fact]
