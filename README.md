@@ -24,12 +24,3 @@ apply (don't use the exact same salt, the idea is to provide a _random_ salt, un
 
 The idea is that your `SymmetricSecretKey` is based upon the above configuration setting, implying you should safe keep it the
 same way you'd safe keep the pin code to your ATM card.
-
-## License
-
-Although most of Magic's source code is Open Source, you will need a license key to use it.
-[You can obtain a license key here](https://servergardens.com/buy/).
-Notice, 7 days after you put Magic into production, it will stop working, unless you have a valid
-license for it.
-
-* [Get licensed](https://servergardens.com/buy/)
