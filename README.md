@@ -1,7 +1,7 @@
 
 # Magic Lambda Auth
 
-[![Build status](https://travis-ci.org/polterguy/magic.lambda.auth.svg?master)](https://travis-ci.org/polterguy/magic.lambda.auth)
+[![Build status](https://travis-ci.com/polterguy/magic.lambda.auth.svg?master)](https://travis-ci.com/polterguy/magic.lambda.auth)
 
 Authentication and authorization helpers for [Magic](https://github.com/polterguy/magic). This project allows you to create and consume
 JWT tokens, to secure your magic installation. The project contains 3 slots.
