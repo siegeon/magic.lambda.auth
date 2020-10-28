@@ -10,7 +10,7 @@
     <Description>Authentication and authorization slots for Magic, allowing you to easily create, verify and refresh JWT tokens in your Magic application. To use package go to https://polterguy.github.io</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.auth</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>8.5.0</PackageVersion>
+    <PackageVersion>8.6.0</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.auth.git</RepositoryUrl>
@@ -43,8 +43,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
-    <PackageReference Include="magic.node.extensions" Version="8.5.*" />
-    <PackageReference Include="magic.signals.contracts" Version="8.5.*" />
-    <PackageReference Include="magic.lambda" Version="8.5.*" />
+    <PackageReference Include="magic.node.extensions" Version="8.6.*" />
+    <PackageReference Include="magic.signals.contracts" Version="8.6.*" />
+    <PackageReference Include="magic.lambda" Version="8.6.*" />
   </ItemGroup>
 </Project>
