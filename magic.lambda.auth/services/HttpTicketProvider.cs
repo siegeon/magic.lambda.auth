@@ -14,6 +14,7 @@ namespace magic.lambda.auth.services
 {
     /// <summary>
     /// HTTP ticket provider service implementation.
+    /// 
     /// Provides a thin layer of abstraction between retrieving authenticated user, 
     /// and the HttpContext to disassociate the HttpContext form the ticket declaring currently logged in user.
     /// </summary>
@@ -31,32 +32,26 @@ namespace magic.lambda.auth.services
             _contextAccessor = contextAccessor;
         }
 
-        /// <summary>
-        /// Returns username for currently logged in user.
-        /// </summary>
+        /// <inheritdoc/>
         public string Username => _contextAccessor.HttpContext.User.Identity.Name;
 
-        /// <summary>
-        /// Returns all roles for currently logged in user, if any.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<string> Roles => (_contextAccessor.HttpContext.User.Identity as ClaimsIdentity).Claims
             .Where(c => c.Type == ClaimTypes.Role)
             .Select(x => x.Value);
 
-        /// <summary>
-        /// Returns true if user belongs to specified role.
-        /// </summary>
-        /// <param name="role">Role tro check for.</param>
-        /// <returns>True if user belongs to role.</returns>
+        /// <inheritdoc/>
+        public IEnumerable<(string Name, string Value)> Claims => (_contextAccessor.HttpContext.User.Identity as ClaimsIdentity).Claims
+            .Where(c => c.Type != ClaimTypes.Role)
+            .Select(x => (x.Type, x.Value));
+
+        /// <inheritdoc/>
         public bool InRole(string role)
         {
             return _contextAccessor.HttpContext.User.IsInRole(role?.Trim() ?? throw new ArgumentNullException(nameof(role)));
         }
 
-        /// <summary>
-        /// Returns true if user is authenticated at all.
-        /// </summary>
-        /// <returns>True if user is authenticated.</returns>
+        /// <inheritdoc/>
         public bool IsAuthenticated()
         {
             return _contextAccessor.HttpContext.User.Identity.IsAuthenticated;

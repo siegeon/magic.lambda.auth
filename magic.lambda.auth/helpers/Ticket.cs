@@ -3,7 +3,9 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System.Linq;
 using System.Collections.Generic;
+using magic.node.extensions;
 
 namespace magic.lambda.auth.helpers
 {
@@ -16,11 +18,21 @@ namespace magic.lambda.auth.helpers
         /// Creates a new ticket instance.
         /// </summary>
         /// <param name="username">Username for your ticket.</param>
-        /// <param name="roles">roles the user belongs to.</param>
-        public Ticket(string username, IEnumerable<string> roles)
+        /// <param name="roles">Roles the user belongs to.</param>
+        /// <param name="claims">Additional claims for user.</param>
+        public Ticket(
+            string username,
+            IEnumerable<string> roles,
+            IEnumerable<(string Name, string Value)> claims = null)
         {
             Username = username;
             Roles = new List<string>(roles ?? new string[] { });
+
+            // Checking if caller provided additional claims.
+            if (claims != null && claims.Any())
+                Claims = claims.Select(x => (x.Name, x.Value)).ToList();
+            else
+                Claims = new List<(string Name, string Value)>();
         }
 
         /// <summary>
@@ -32,5 +44,10 @@ namespace magic.lambda.auth.helpers
         /// Roles the user belongs to.
         /// </summary>
         public IEnumerable<string> Roles { get; private set; }
+
+        /// <summary>
+        /// Additional claims for user.
+        /// </summary>
+        public IEnumerable<(string Name, string Value)> Claims { get; private set; }
     }
 }

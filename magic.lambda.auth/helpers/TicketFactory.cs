@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Security;
 using System.Security.Claims;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using magic.lambda.exceptions;
 using magic.lambda.auth.contracts;
+using magic.node.extensions;
 
 namespace magic.lambda.auth.helpers
 {
@@ -26,8 +28,11 @@ namespace magic.lambda.auth.helpers
         /// </summary>
         /// <param name="configuration">Configuration settings.</param>
         /// <param name="ticket">Existing user ticket, containing username and roles.</param>
-        /// <returns></returns>
-        public static string CreateTicket(IConfiguration configuration, Ticket ticket)
+        /// <param name="claims">Additional claims user should be associated with.</param>
+        /// <returns>A JWT token</returns>
+        public static string CreateTicket(
+            IConfiguration configuration,
+            Ticket ticket)
         {
             // Getting data to put into token.
             var secret = configuration["magic:auth:secret"] ??
@@ -49,6 +54,9 @@ namespace magic.lambda.auth.helpers
 
             // Adding all roles.
             tokenDescriptor.Subject.AddClaims(ticket.Roles.Select(x => new Claim(ClaimTypes.Role, x)));
+
+            // Adding all additional claims.
+            tokenDescriptor.Subject.AddClaims(ticket.Claims.Select(x => new Claim(x.Name, x.Value)));
 
             // Creating token and returning to caller.
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -83,7 +91,7 @@ namespace magic.lambda.auth.helpers
         /// <returns></returns>
         public static Ticket GetTicket(ITicketProvider ticketProvider)
         {
-            return new Ticket(ticketProvider.Username, ticketProvider.Roles);
+            return new Ticket(ticketProvider.Username, ticketProvider.Roles, ticketProvider.Claims);
         }
     }
 }

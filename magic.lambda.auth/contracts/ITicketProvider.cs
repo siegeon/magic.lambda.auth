@@ -23,6 +23,11 @@ namespace magic.lambda.auth.contracts
         IEnumerable<string> Roles { get; }
 
         /// <summary>
+        /// Returns all additional claims for currently authenticated user.
+        /// </summary>
+        IEnumerable<(string Name, string Value)> Claims { get; }
+
+        /// <summary>
         /// Returns true if current user belongs to specified role.
         /// </summary>
         /// <param name="role">Role to check for.</param>

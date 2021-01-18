@@ -37,7 +37,10 @@ namespace magic.lambda.auth
         {
             var ticket = TicketFactory.GetTicket(_ticketProvider);
             input.Value = ticket.Username;
-            input.AddRange(ticket.Roles.Select(x => new Node("", x)));
+            if (ticket.Roles.Any())
+                input.Add(new Node("roles", null, ticket.Roles.Select(x => new Node("", x))));
+            if (ticket.Claims.Any())
+                input.Add(new Node("claims", null, ticket.Claims.Select(x => new Node(x.Name, x.Value))));
         }
     }
 }

@@ -44,9 +44,15 @@ namespace magic.lambda.auth
                 .Children
                 .Select(x => x.GetEx<string>())
                 .ToArray();
+            var claims = input.Children
+                .Where(x => x.Name != "roles" && x.Name != "username")
+                .Select(x => (x.Name, Converter.ToString(x.Value).Item2))
+                .ToList();
 
             input.Clear();
-            input.Value = TicketFactory.CreateTicket(_configuration, new Ticket(username, roles));
+            input.Value = TicketFactory.CreateTicket(
+                _configuration,
+                new Ticket(username, roles, claims));
         }
     }
 }
