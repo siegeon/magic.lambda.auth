@@ -29,6 +29,8 @@ namespace magic.lambda.auth.tests
 
             public IEnumerable<string> Roles => _auth ? new string[] { "bar1", "bar2" } : new string[] { };
 
+            public IEnumerable<(string Name, string Value)> Claims => new List<(string Name, string Value)>();
+
             public bool InRole(string role)
             {
                 return Roles.Contains(role);
