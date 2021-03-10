@@ -98,6 +98,28 @@ namespace magic.lambda.auth.helpers
         }
 
         /// <summary>
+        /// Returns true if user belongs to any of the specified role(s) supplied as
+        /// a comma separated list of values.
+        /// </summary>
+        /// <param name="ticketProvider">Service provider, needed to retrieve the IHttpContextAccessor</param>
+        /// <param name="roles"></param>
+        public static bool InRole(ITicketProvider ticketProvider, string roles)
+        {
+            if (!ticketProvider.IsAuthenticated())
+                return false;
+
+            if (!string.IsNullOrEmpty(roles))
+            {
+                foreach (var idxRole in roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    if (ticketProvider.InRole(idxRole))
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Returns the ticket belonging to the specified user.
         /// </summary>
         /// <param name="ticketProvider">Service provider, necessary to retrieve the IHttpContextAccessor</param>
