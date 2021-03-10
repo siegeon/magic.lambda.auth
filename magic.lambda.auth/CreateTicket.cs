@@ -45,14 +45,15 @@ namespace magic.lambda.auth
                 .Select(x => x.GetEx<string>())
                 .ToArray();
             var claims = input.Children
-                .Where(x => x.Name != "roles" && x.Name != "username")
-                .Select(x => (x.Name, Converter.ToString(x.Value).Item2))
+                .Where(x => x.Name != "roles" && x.Name != "username" && x.Name != "expires")
+                .Select(x => (x.Name, x.GetEx<string>()))
                 .ToList();
+            var expires = input.Children.FirstOrDefault(x => x.Name == "expires")?.GetEx<DateTime>();
 
             input.Clear();
             input.Value = TicketFactory.CreateTicket(
                 _configuration,
-                new Ticket(username, roles, claims));
+                new Ticket(username, roles, claims, expires));
         }
     }
 }

@@ -3,9 +3,9 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System;
 using System.Linq;
 using System.Collections.Generic;
-using magic.node.extensions;
 
 namespace magic.lambda.auth.helpers
 {
@@ -23,7 +23,8 @@ namespace magic.lambda.auth.helpers
         public Ticket(
             string username,
             IEnumerable<string> roles,
-            IEnumerable<(string Name, string Value)> claims = null)
+            IEnumerable<(string Name, string Value)> claims = null,
+            DateTime? expires = null)
         {
             Username = username;
             Roles = new List<string>(roles ?? new string[] { });
@@ -33,12 +34,19 @@ namespace magic.lambda.auth.helpers
                 Claims = claims.Select(x => (x.Name, x.Value)).ToList();
             else
                 Claims = new List<(string Name, string Value)>();
+            Expires = expires;
         }
 
         /// <summary>
         /// Username of the user.
         /// </summary>
         public string Username { get; private set; }
+
+        /// <summary>
+        /// Absolute expiration date in UTC of when ticket expires. If not specified, will
+        /// read default expiration from app configuration.
+        /// </summary>
+        public DateTime? Expires { get; set; }
 
         /// <summary>
         /// Roles the user belongs to.

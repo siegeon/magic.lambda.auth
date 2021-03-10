@@ -8,13 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Security;
 using System.Security.Claims;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using magic.lambda.exceptions;
 using magic.lambda.auth.contracts;
-using magic.node.extensions;
 
 namespace magic.lambda.auth.helpers
 {
@@ -37,7 +35,6 @@ namespace magic.lambda.auth.helpers
             // Getting data to put into token.
             var secret = configuration["magic:auth:secret"] ??
                 throw new SecurityException("We couldn't find any 'magic:auth:secret' setting in your applications configuration");
-            var validMinutes = int.Parse(configuration["magic:auth:valid-minutes"] ?? "20");
             var key = Encoding.UTF8.GetBytes(secret);
 
             // Creating our token descriptor.
@@ -48,9 +45,25 @@ namespace magic.lambda.auth.helpers
                 {
                     new Claim(ClaimTypes.Name, ticket.Username),
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(validMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };
+
+            // Setting expiration date of ticket.
+            if (ticket.Expires.HasValue)
+            {
+                // Notice, if expiration date is min value of DateTime we assume caller wants a token that "never expires", hence setting it 5 years into the future!
+                if (ticket.Expires.Value != DateTime.MinValue)
+                    tokenDescriptor.Expires = ticket.Expires.Value;
+                else
+                    tokenDescriptor.Expires = DateTime.Now.AddYears(5);
+
+            }
+            else
+            {
+                // Using default expiration value from configuration for JWT ticket.
+                var validMinutes = int.Parse(configuration["magic:auth:valid-minutes"] ?? "20");
+                tokenDescriptor.Expires = DateTime.UtcNow.AddMinutes(validMinutes);
+            }
 
             // Adding all roles.
             tokenDescriptor.Subject.AddClaims(ticket.Roles.Select(x => new Claim(ClaimTypes.Role, x)));
