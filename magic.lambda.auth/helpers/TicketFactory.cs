@@ -26,7 +26,6 @@ namespace magic.lambda.auth.helpers
         /// </summary>
         /// <param name="configuration">Configuration settings.</param>
         /// <param name="ticket">Existing user ticket, containing username and roles.</param>
-        /// <param name="claims">Additional claims user should be associated with.</param>
         /// <returns>A JWT token</returns>
         public static string CreateTicket(
             IConfiguration configuration,

@@ -20,6 +20,7 @@ namespace magic.lambda.auth.helpers
         /// <param name="username">Username for your ticket.</param>
         /// <param name="roles">Roles the user belongs to.</param>
         /// <param name="claims">Additional claims for user.</param>
+        /// <param name="expires">Optional absolute date and time for when token should expire.</param>
         public Ticket(
             string username,
             IEnumerable<string> roles,
