@@ -127,6 +127,10 @@ belongs to as a structured lambda object. As a general rule of thumb though, you
 endpoints using the above slots, but rather the _verify_ slot above, to avoid having errors in your code
 resulting in that an unauthorized user gains access to invoke an endpoint he should not be allowed to invoke.
 
+## Project website
+
+The source code for this repository can be found at [github.com/polterguy/magic.lambda.auth](https://github.com/polterguy/magic.lambda.auth), and you can provide feedback, provide bug reports, etc at the same place.
+
 ## Quality gates
 
 - [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.auth&metric=alert_status)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.auth)
