@@ -75,6 +75,24 @@ namespace magic.lambda.auth.tests
         }
 
         [Fact]
+        public void InRoleNoConfig()
+        {
+            var signaler = Common.Initialize(true, false);
+            var node = new Node("", "bar1");
+            signaler.Signal("auth.ticket.in-role", node); // Notice, our TicketProvder in Common.cs will sort this out for us.
+            Assert.True(node.Get<bool>());
+        }
+
+        [Fact]
+        public void NotInRoleNoConfig()
+        {
+            var signaler = Common.Initialize(true, false);
+            var node = new Node("", "bar3");
+            signaler.Signal("auth.ticket.in-role", node); // Notice, our TicketProvder in Common.cs will sort this out for us.
+            Assert.False(node.Get<bool>());
+        }
+
+        [Fact]
         public void VerifyTicket_Throws()
         {
             var signaler = Common.Initialize(false);
