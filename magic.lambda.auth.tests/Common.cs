@@ -27,7 +27,7 @@ namespace magic.lambda.auth.tests
 
             public string Username => _auth ? "foo" : null;
 
-            public IEnumerable<string> Roles => _auth ? new string[] { "bar1", "bar2" } : new string[] { };
+            public IEnumerable<string> Roles => _auth ? new string[] { "bar1", "bar2" } : Array.Empty<string>();
 
             public IEnumerable<(string Name, string Value)> Claims => new List<(string Name, string Value)>();
 
