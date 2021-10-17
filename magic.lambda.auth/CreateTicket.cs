@@ -48,7 +48,7 @@ namespace magic.lambda.auth
                 .Where(x => x.Name != "roles" && x.Name != "username" && x.Name != "expires")
                 .Select(x => (x.Name, x.GetEx<string>()))
                 .ToList();
-            var expires = input.Children.FirstOrDefault(x => x.Name == "expires")?.GetEx<DateTime>();
+            var expires = input.Children.FirstOrDefault(x => x.Name == "expires")?.GetEx<DateTime?>();
 
             input.Clear();
             input.Value = TicketFactory.CreateTicket(
