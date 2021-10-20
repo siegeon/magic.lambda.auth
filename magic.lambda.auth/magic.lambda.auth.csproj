@@ -10,7 +10,7 @@
     <Description>Authentication and authorization slots for Magic, allowing you to easily create, verify and refresh JWT tokens in your Magic application. To use package go to https://polterguy.github.io</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.auth</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>9.8.0</PackageVersion>
+    <PackageVersion>9.8.1</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.auth.git</RepositoryUrl>

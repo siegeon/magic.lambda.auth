@@ -42,7 +42,12 @@ namespace magic.lambda.auth.services
 
         /// <inheritdoc/>
         public IEnumerable<(string Name, string Value)> Claims => (_contextAccessor.HttpContext.User.Identity as ClaimsIdentity).Claims
-            .Where(c => c.Type != ClaimTypes.Role)
+            .Where(c =>
+                c.Type != ClaimTypes.Role &&
+                c.Type != "nbf" &&
+                c.Type != "exp" &&
+                c.Type != "iat" &&
+                c.Type != ClaimTypes.Name)
             .Select(x => (x.Type, x.Value));
 
         /// <inheritdoc/>
