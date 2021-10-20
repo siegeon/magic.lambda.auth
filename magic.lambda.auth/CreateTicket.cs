@@ -45,9 +45,10 @@ namespace magic.lambda.auth
                 .Select(x => x.GetEx<string>())
                 .ToArray();
             var claims = input.Children
-                .Where(x => x.Name != "roles" && x.Name != "username" && x.Name != "expires")
+                .FirstOrDefault(x => x.Name == "claims")?
+                .Children
                 .Select(x => (x.Name, x.GetEx<string>()))
-                .ToList();
+                .ToArray();
             var expires = input.Children.FirstOrDefault(x => x.Name == "expires")?.GetEx<DateTime?>();
 
             input.Clear();

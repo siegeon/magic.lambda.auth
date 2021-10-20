@@ -40,7 +40,7 @@ namespace magic.lambda.auth
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            // This will throw is ticket is expired, doesn't exist, etc.
+            // This will throw if ticket is expired, doesn't exist, etc.
             TicketFactory.VerifyTicket(_ticketProvider, null);
 
             // Retrieving old ticket and using its data to create a new ticket.
