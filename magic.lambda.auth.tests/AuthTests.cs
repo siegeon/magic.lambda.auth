@@ -56,7 +56,7 @@ namespace magic.lambda.auth.tests
             args.Add(new Node("roles", null, new Node[] { new Node("", "howdy1") }));
             signaler.Signal("auth.ticket.create", args);
             var token = new JwtSecurityToken(jwtEncodedString: args.Get<string>());
-            Assert.Equal("foo", token.Payload["unique_name"]);
+            Assert.Equal("foo", token.Payload["name"]);
             Assert.Equal("howdy1", token.Payload["role"]);
         }
 
