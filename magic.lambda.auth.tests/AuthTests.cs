@@ -29,7 +29,7 @@ namespace magic.lambda.auth.tests
         {
             var signaler = Common.Initialize();
             var args = new Node();
-            Assert.Throws<ArgumentException>(() => signaler.Signal("auth.ticket.create", args));
+            Assert.Throws<HyperlambdaException>(() => signaler.Signal("auth.ticket.create", args));
         }
 
         [Fact]

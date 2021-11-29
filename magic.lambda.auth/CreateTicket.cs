@@ -37,7 +37,7 @@ namespace magic.lambda.auth
         public void Signal(ISignaler signaler, Node input)
         {
             var username = input.Children.FirstOrDefault(x => x.Name == "username")?.GetEx<string>()
-                ?? throw new ArgumentException("No [username] supplied to [auth.ticket.create]");
+                ?? throw new HyperlambdaException("No [username] supplied to [auth.ticket.create]");
             var roles = input.Children
                 .FirstOrDefault(x => x.Name == "roles")?
                 .Children
