@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\magic.lambda\magic.lambda\dev_magic.lambda.csproj" />
     <ProjectReference Include="..\..\magic.signals\magic.signals.services\dev_magic.signals.services.csproj" />
     <ProjectReference Include="..\magic.lambda.auth\dev_magic.lambda.auth.csproj" />
   </ItemGroup>

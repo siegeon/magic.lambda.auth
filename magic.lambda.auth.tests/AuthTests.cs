@@ -8,7 +8,6 @@ using System.IdentityModel.Tokens.Jwt;
 using Xunit;
 using magic.node;
 using magic.node.extensions;
-using magic.lambda.exceptions;
 
 namespace magic.lambda.auth.tests
 {
