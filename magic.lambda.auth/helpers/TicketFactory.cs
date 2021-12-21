@@ -9,7 +9,7 @@ using System.Security;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
+using magic.node.contracts;
 using magic.node.extensions;
 using magic.lambda.auth.contracts;
 
@@ -27,7 +27,7 @@ namespace magic.lambda.auth.helpers
         /// <param name="ticket">Existing user ticket, containing username and roles.</param>
         /// <returns>A JWT token</returns>
         public static string CreateTicket(
-            IConfiguration configuration,
+            IMagicConfiguration configuration,
             Ticket ticket)
         {
             // Getting data to put into token.

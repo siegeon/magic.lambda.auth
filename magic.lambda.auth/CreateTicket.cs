@@ -4,8 +4,8 @@
 
 using System;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
 using magic.node;
+using magic.node.contracts;
 using magic.node.extensions;
 using magic.signals.contracts;
 using magic.lambda.auth.helpers;
@@ -18,13 +18,13 @@ namespace magic.lambda.auth
     [Slot(Name = "auth.ticket.create")]
     public class CreateTicket : ISlot
     {
-        readonly IConfiguration _configuration;
+        readonly IMagicConfiguration _configuration;
 
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
         /// <param name="configuration">Configuration for application.</param>
-        public CreateTicket(IConfiguration configuration)
+        public CreateTicket(IMagicConfiguration configuration)
         {
             _configuration = configuration;
         }

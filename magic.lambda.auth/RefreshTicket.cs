@@ -2,8 +2,8 @@
  * Magic Cloud, copyright Aista, Ltd. See the attached LICENSE file for details.
  */
 
-using Microsoft.Extensions.Configuration;
 using magic.node;
+using magic.node.contracts;
 using magic.signals.contracts;
 using magic.lambda.auth.helpers;
 using magic.lambda.auth.contracts;
@@ -19,14 +19,14 @@ namespace magic.lambda.auth
     public class RefreshTicket : ISlot
     {
         readonly ITicketProvider _ticketProvider;
-        readonly IConfiguration _configuration;
+        readonly IMagicConfiguration _configuration;
 
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
         /// <param name="configuration">Configuration for your application.</param>
         /// <param name="ticketProvider">Ticket provider, necessary to retrieve the authenticated user.</param>
-        public RefreshTicket(IConfiguration configuration, ITicketProvider ticketProvider)
+        public RefreshTicket(IMagicConfiguration configuration, ITicketProvider ticketProvider)
         {
             _configuration = configuration;
             _ticketProvider = ticketProvider;

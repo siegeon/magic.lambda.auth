@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using magic.node.contracts;
 using magic.signals.services;
 using magic.signals.contracts;
 using magic.lambda.auth.contracts;
@@ -48,7 +49,7 @@ namespace magic.lambda.auth.tests
             var types = new SignalsProvider(InstantiateAllTypes<ISlot>(services));
             services.AddTransient<ISignalsProvider>((svc) => types);
             services.AddTransient<ITicketProvider, TicketProvider>((svc) => new TicketProvider(createTicket));
-            var mockConfiguration = new Mock<IConfiguration>();
+            var mockConfiguration = new Mock<IMagicConfiguration>();
             if (config)
             {
                 mockConfiguration.SetupGet(x => x[It.Is<string>(x2 => x2 == "magic:auth:secret")]).Returns("some-secret-goes-here");
