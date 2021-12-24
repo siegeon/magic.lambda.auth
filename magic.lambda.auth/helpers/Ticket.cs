@@ -27,7 +27,7 @@ namespace magic.lambda.auth.helpers
             DateTime? expires = null)
         {
             Username = username;
-            Roles = new List<string>(roles ?? new string[] { });
+            Roles = new List<string>(roles ?? Array.Empty<string>());
 
             // Checking if caller provided additional claims.
             if (claims != null && claims.Any())
