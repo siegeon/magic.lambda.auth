@@ -58,19 +58,23 @@ namespace magic.lambda.auth.tests
             Assert.Equal("howdy1", token.Payload["role"]);
         }
 
+        #pragma warning disable S2699
         [Fact]
         public void VerifyTicket()
         {
             var signaler = Common.Initialize();
             signaler.Signal("auth.ticket.verify", new Node()); // Notice, our TicketProvder in Common.cs will sort this out for us.
         }
+        #pragma warning restore S2699
 
+        #pragma warning disable S2699
         [Fact]
         public void VerifyTicketNoConfig()
         {
             var signaler = Common.Initialize(true, false);
             signaler.Signal("auth.ticket.verify", new Node()); // Notice, our TicketProvder in Common.cs will sort this out for us.
         }
+        #pragma warning restore S2699
 
         [Fact]
         public void InRoleNoConfig()
@@ -109,19 +113,23 @@ namespace magic.lambda.auth.tests
             Assert.Equal("bar2", node.Children.FirstOrDefault(x => x.Name == "roles")?.Children.Skip(1).First().Value);
         }
 
+        #pragma warning disable S2699
         [Fact]
         public void VerifyRole_01()
         {
             var signaler = Common.Initialize();
             signaler.Signal("auth.ticket.verify", new Node("", "bar1")); // Notice, our TicketProvder in Common.cs will sort this out for us.
         }
+        #pragma warning restore S2699
 
+        #pragma warning disable S2699
         [Fact]
         public void VerifyRole_02()
         {
             var signaler = Common.Initialize();
             signaler.Signal("auth.ticket.verify", new Node("", "bar2")); // Notice, our TicketProvder in Common.cs will sort this out for us.
         }
+        #pragma warning restore S2699
 
         [Fact]
         public void VerifyRole_Throws()
