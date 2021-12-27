@@ -84,11 +84,8 @@ namespace magic.lambda.auth.helpers
             if (!ticketProvider.IsAuthenticated())
                 throw new HyperlambdaException("Access denied", true, 401);
 
-            if (!string.IsNullOrEmpty(roles))
-            {
-                if (!roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Any(x => ticketProvider.InRole(x)))
-                    throw new HyperlambdaException("Access denied", true, 401);
-            }
+            if (!string.IsNullOrEmpty(roles) && !roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Any(x => ticketProvider.InRole(x)))
+                throw new HyperlambdaException("Access denied", true, 401);
         }
 
         /// <summary>
