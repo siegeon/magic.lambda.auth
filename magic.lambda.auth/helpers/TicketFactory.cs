@@ -86,12 +86,8 @@ namespace magic.lambda.auth.helpers
 
             if (!string.IsNullOrEmpty(roles))
             {
-                foreach (var idxRole in roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    if (ticketProvider.InRole(idxRole))
-                        return;
-                }
-                throw new HyperlambdaException("Access denied", true, 401);
+                if (!roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Any(x => ticketProvider.InRole(x)))
+                    throw new HyperlambdaException("Access denied", true, 401);
             }
         }
 
@@ -106,15 +102,9 @@ namespace magic.lambda.auth.helpers
             if (!ticketProvider.IsAuthenticated())
                 return false;
 
-            if (!string.IsNullOrEmpty(roles))
-            {
-                foreach (var idxRole in roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    if (ticketProvider.InRole(idxRole))
-                        return true;
-                }
-            }
-            return false;
+            if (string.IsNullOrEmpty(roles))
+                return false;
+            return roles.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Any(x => ticketProvider.InRole(x));
         }
 
         /// <summary>
